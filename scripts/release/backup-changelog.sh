@@ -2,10 +2,5 @@
 set -euo pipefail
 
 # Save the previous changelog so publish.sh can diff this version's section for release notes.
-if [ -f Changelog.md ]; then
-  cp Changelog.md Changelog.old.md
-else
-  touch Changelog.old.md
-fi
-
+cp Changelog.md Changelog.old.md 2>/dev/null || touch Changelog.old.md
 echo "✅ Changelog baseline saved to Changelog.old.md"

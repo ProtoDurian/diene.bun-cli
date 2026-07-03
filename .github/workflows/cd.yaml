@@ -20,6 +20,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FURY_TOKEN: ${{ secrets.FURY_TOKEN }}
+          FURY_ENDPOINT: push.fury.io/atomicloud
           SCOOP_BREW_TOKEN: ${{ secrets.SCOOP_BREW_TOKEN }}
   docker:
     name: Docker Image

@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Push the built Linux packages (deb/rpm) to Gemfury. Requires FURY_TOKEN. Runs against dist/.
+# Push the built Linux packages (deb/rpm) to Gemfury. Instance values arrive via env (cd.yaml).
 [ -z "${FURY_TOKEN:-}" ] && echo "❌ 'FURY_TOKEN' env var not set" >&2 && exit 1
+[ -z "${FURY_ENDPOINT:-}" ] && echo "❌ 'FURY_ENDPOINT' env var not set" >&2 && exit 1
 
-endpoint="push.fury.io/atomicloud"
+endpoint="${FURY_ENDPOINT}"
 
 shopt -s nullglob
 packages=(dist/*.deb dist/*.rpm)
