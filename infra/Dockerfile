@@ -1,5 +1,5 @@
 # Distroless image whose entrypoint is the standalone CLI binary (no Bun/Node runtime layer).
-FROM oven/bun:1.3.13 AS build
+FROM oven/bun:1.3.14 AS build
 ARG TARGETARCH
 WORKDIR /app
 COPY package.json bun.lock tsconfig.json ./
