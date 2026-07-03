@@ -32,9 +32,9 @@ tasks:
     cmds:
       - rm -rf dist node_modules coverage
   build:
-    desc: Build the CLI bundle to dist/
+    desc: Build the bundle to dist/
     cmds:
-      - bun build ./{{.ENTRY}} --outdir ./dist --target bun
+      - ./scripts/local/build.sh
   run:
     desc: 'Run the CLI locally (args via --, e.g. -- --help)'
     cmds:
