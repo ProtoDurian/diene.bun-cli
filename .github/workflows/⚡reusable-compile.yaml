@@ -10,7 +10,7 @@ jobs:
       - nscloud-cache-tag-atomi-nix-store-cache
     steps:
       - uses: AtomiCloud/actions.setup-nix@v3
-      - uses: AtomiCloud/actions.cache-bun@v1
+      - uses: AtomiCloud/actions.cache-bun@v2
       - name: Cross-compile standalone binaries
         run: nix develop .#ci -c ./scripts/release/compile.sh
       - name: Upload binaries
