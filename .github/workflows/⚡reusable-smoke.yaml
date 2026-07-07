@@ -15,7 +15,7 @@ jobs:
     name: Smoke
     runs-on: ${{ fromJSON(inputs.runs_on) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Download compiled binaries
