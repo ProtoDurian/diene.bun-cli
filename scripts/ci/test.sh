@@ -7,6 +7,8 @@ mode="${1:-}"
 root_dir="$(git rev-parse --show-toplevel)"
 cd "${root_dir}"
 
+bun install --frozen-lockfile
+
 # sit runs the compiled binary, so it has no coverage ledger to scope.
 if [[ ${mode} == "sit" ]]; then
   if [[ -d dist/bin ]]; then chmod -R +x dist/bin; fi

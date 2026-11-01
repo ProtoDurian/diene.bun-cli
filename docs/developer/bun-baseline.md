@@ -61,9 +61,9 @@ compiles in a version-pinned `oven/bun` stage and copies only the binary into
 `gcr.io/distroless/cc-debian12:nonroot`. `REDIS_HOST` and `REDIS_PORT` select
 the Redis endpoint and reject blank or invalid overrides.
 
-Application descendants use pino JSON logging with trace-context injection
-from `@atomicloud/diene.otel`. That application logging layer is intentionally
-not duplicated in this toolchain sample before the shared library is consumed.
+The sample logs pino JSON only. Trace-context injection belongs to the
+observability payload, which descendants add; this node declares no
+`@atomicloud/diene.*` dependency.
 
 ## TypeScript standards
 

@@ -26,8 +26,6 @@ checks:
       - hadolint
       - infisical
       - jq
-      - kubeconform -v
-      - kyverno version
       - nix
       - pre-commit
       - releaser

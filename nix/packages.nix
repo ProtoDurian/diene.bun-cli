@@ -5,8 +5,6 @@
 }:
 let
   all = rec {
-    # ### nix-root
-    # #### source: main
     atomipkgs = (
       with atomi;
       {
@@ -14,60 +12,40 @@ let
           atomiutils
           cyanprint
           dlint
-          # The axis-pure slices, not the `infralint`/`infrautils` aggregates.
-          # The aggregates carry the helm axis by CONTENT — infralint ships
-          # helm-docs and helmlint, infrautils ships helm — so a node whose
-          # defining property is the absence of that axis cannot declare them
-          # and still be telling the truth. `infralint-docker` is taken because
-          # hadolint and skopeo are invoked here; `infrautils-docker` is not,
-          # because `docker-client` below already provides the only binary of
-          # it this node uses.
+          # Axis-pure slices: the infralint/infrautils aggregates ship helm, helm-docs and helmlint.
           infralint-core
           infralint-docker
           infrautils-core
+          infrautils-docker
           releaser
           skills-sync
           ;
       }
     );
-
-    # ### workspace
-    # #### source: workspace
+    nix-unstable = (with pkgs-unstable; { });
     nix-2605 = (
       with pkgs-2605;
       {
         inherit
           actionlint
-          bash
           # ### bun-base-packages
           # #### source: bun-base
           bun
+          nodejs
           dpkg
-          docker-client
           gh
           git
           go
           go-task
           goreleaser
           infisical
-          jq
           nix
-          nodejs
           pre-commit
           ripgrep
           rpm
           shellcheck
           treefmt
-          yq-go
           ;
-      }
-    );
-
-    # ### nix-unstable
-    # #### source: main
-    nix-unstable = (
-      with pkgs-unstable;
-      {
       }
     );
 
