@@ -50,7 +50,9 @@ homebrew-cask)
     ([.homebrew_casks[].hooks.post.install] | join("\n") | contains("com.apple.quarantine"))'
   ;;
 fury-wiring)
-  rg -F './scripts/release/publish.sh' .github/workflows/cd.yaml
+  yq -o=json '.' .github/workflows/cd.yaml | jq -e '.jobs.goreleaser.uses == "./.github/workflows/⚡reusable-goreleaser.yaml"'
+  rg -F './scripts/ci/publish.sh' .github/workflows/⚡reusable-goreleaser.yaml
+  rg -F './scripts/release/publish.sh' scripts/ci/publish.sh
   rg -F './scripts/release/fury.sh' scripts/release/publish.sh
   stage_line="$(rg -nF 'goreleaser release --clean --skip=publish --release-notes ./IncrementalChangelog.md' scripts/release/publish.sh | cut -d: -f1)"
   fury_line="$(rg -nF './scripts/release/fury.sh' scripts/release/publish.sh | cut -d: -f1)"
@@ -82,8 +84,9 @@ installation-parity)
   rg -F 'bun-cli_<os>_<arch>.tar.gz' INSTALLATION.md
   ;;
 nix-release-wiring)
-  rg -F 'bun-cli = pkgs.stdenv.mkDerivation' nix/packages.nix
-  rg -F 'nix build .#bun-cli' .github/workflows/cd.yaml
+  rg -F 'bun-cli = pkgs-2605.stdenv.mkDerivation' nix/packages.nix
+  yq -o=json '.' .github/workflows/cd.yaml | jq -e '.jobs.goreleaser.uses == "./.github/workflows/⚡reusable-goreleaser.yaml"'
+  rg -F 'nix build .#bun-cli' .github/workflows/⚡reusable-goreleaser.yaml
   ;;
 *)
   echo "❌ unknown CLI contract: ${contract}" >&2
