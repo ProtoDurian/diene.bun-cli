@@ -7,7 +7,9 @@ export interface IShellRunner {
 
 /** Bun Shell ($) — zero-dependency, safely escaped shell calls. */
 export class BunShell implements IShellRunner {
+  constructor(private readonly shell: typeof $ = $) {}
+
   async platform(): Promise<string> {
-    return (await $`uname -srm`.text()).trim();
+    return (await this.shell`uname -srm`.text()).trim();
   }
 }

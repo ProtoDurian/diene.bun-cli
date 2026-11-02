@@ -10,16 +10,18 @@ export interface ICliIo {
 }
 
 export class ConsoleIo implements ICliIo {
+  constructor(private readonly output: Pick<Console, 'log' | 'error'> = console) {}
+
   success(message: string): void {
-    console.log(chalk.green(message));
+    this.output.log(chalk.green(message));
   }
 
   warn(message: string): void {
-    console.log(chalk.yellow(message));
+    this.output.log(chalk.yellow(message));
   }
 
   error(message: string): void {
-    console.error(chalk.red(message));
+    this.output.error(chalk.red(message));
   }
 
   setExitCode(code: number): void {

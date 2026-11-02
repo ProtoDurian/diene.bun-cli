@@ -37,6 +37,7 @@ ADDED=(
   tests/integration/controllers-real-redis.test.ts
   tests/integration/doctor-controller.test.ts
   tests/integration/get-controller.test.ts
+  tests/integration/redis-kv-store-offline.test.ts
   tests/integration/seed-controller.test.ts
   tests/integration/set-controller.test.ts
   tests/integration/terminal-adapters.test.ts
