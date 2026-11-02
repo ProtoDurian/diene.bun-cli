@@ -23,15 +23,6 @@ jobs:
     with:
       nix_cache_tag: nix-store-cache-bun-ubuntu-26.04-amd64
 
-  named-checks:
-    name: named-checks
-    permissions:
-      contents: read
-    uses: ./.github/workflows/⚡reusable-named-checks.yaml
-    secrets: inherit
-    with:
-      nix_cache_tag: nix-store-cache-bun-ubuntu-26.04-amd64
-
   # ### bun-base-ci
   # #### source: bun-base
   unit:
