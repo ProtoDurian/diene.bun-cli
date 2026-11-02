@@ -85,6 +85,8 @@ jobs:
       contents: read
     uses: ./.github/workflows/⚡reusable-compile.yaml
     secrets: inherit
+    with:
+      nix_cache_tag: nix-store-cache-bun-ubuntu-26.04-amd64
 
   sit:
     name: SIT
@@ -93,6 +95,8 @@ jobs:
       contents: read
     uses: ./.github/workflows/⚡reusable-sit.yaml
     secrets: inherit
+    with:
+      nix_cache_tag: nix-store-cache-bun-ubuntu-26.04-amd64
 
   smoke:
     name: Smoke ${{ matrix.target }}

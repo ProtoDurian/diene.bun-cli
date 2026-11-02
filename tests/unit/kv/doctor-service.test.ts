@@ -51,5 +51,22 @@ describe('DoctorService', () => {
       // Assert
       await should(actual).be.rejectedWith(expected);
     });
+
+    it('should still report a healthy backend when the probe cleanup fails', async () => {
+      // Arrange
+      class FailingDeleteStore extends FakeKeyValueStore {
+        override async delete(): Promise<void> {
+          throw new Error('delete refused');
+        }
+      }
+      const store = new FailingDeleteStore();
+      const subject = new DoctorService(store, new FakeShell('Linux'));
+
+      // Act
+      const actual = await subject.probeBackend();
+
+      // Assert
+      should(actual).be.true();
+    });
   });
 });

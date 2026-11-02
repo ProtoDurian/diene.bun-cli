@@ -84,7 +84,7 @@ installation-parity)
   rg -F 'bun-cli_<os>_<arch>.tar.gz' INSTALLATION.md
   ;;
 nix-release-wiring)
-  rg -F 'bun-cli = pkgs-2605.stdenv.mkDerivation' nix/packages.nix
+  rg -F 'bun-cli = atomiLib.buildBunCli' nix/packages.nix
   yq -o=json '.' .github/workflows/cd.yaml | jq -e '.jobs.goreleaser.uses == "./.github/workflows/⚡reusable-goreleaser.yaml"'
   rg -F 'nix build .#bun-cli' .github/workflows/⚡reusable-goreleaser.yaml
   ;;

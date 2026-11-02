@@ -1,5 +1,6 @@
 {
   atomi,
+  atomiLib,
   pkgs-2605,
   pkgs-unstable,
 }:
@@ -53,7 +54,6 @@ let
     # #### source: bun-cli
     cli =
       let
-        bunPkg = pkgs-2605.bun;
         manifest = builtins.fromJSON (builtins.readFile ../package.json);
         cliNames = builtins.attrNames manifest.bin;
         cliName =
@@ -78,48 +78,17 @@ let
               "result"
             ]);
         };
-        deps = pkgs-2605.stdenv.mkDerivation {
-          pname = "${cliName}-deps";
-          version = manifest.version;
-          inherit src;
-          nativeBuildInputs = [ bunPkg ];
-          dontConfigure = true;
-          # Production deps only: the compiled binary bundles runtime imports (all pure JS),
-          # and excluding devDependencies (notably the platform-specific @biomejs/biome binary)
-          # keeps node_modules identical across linux/darwin so one fixed-output hash suffices.
-          buildPhase = ''
-            export HOME="$TMPDIR"
-            bun install --frozen-lockfile --no-progress --production
-          '';
-          installPhase = ''
-            mkdir -p "$out"
-            cp -r node_modules "$out/node_modules"
-          '';
-          dontFixup = true;
-          outputHashMode = "recursive";
-          outputHashAlgo = "sha256";
-          outputHash = "sha256-1IsJkJ6iS6s0a2+mAP/E1SBxVvIMrhJilvceTRpzIAo=";
-        };
       in
       {
-        bun-cli = pkgs-2605.stdenv.mkDerivation {
-          pname = cliName;
+        # Owner !A78: the compiled CLI comes from the registry builder, never an in-template derivation.
+        # !A84: keep the pinned bun (the compiled runtime and the deps hash depend on it).
+        bun-cli = atomiLib.buildBunCli {
+          name = cliName;
           version = manifest.version;
           inherit src;
-          nativeBuildInputs = [ bunPkg ];
-          dontConfigure = true;
-          buildPhase = ''
-            export HOME="$TMPDIR"
-            cp -r ${deps}/node_modules ./node_modules
-            chmod -R u+w node_modules
-            bun build "./${entry}" --compile --outfile "${cliName}"
-          '';
-          installPhase = ''
-            mkdir -p "$out/bin"
-            cp "${cliName}" "$out/bin/${cliName}"
-          '';
-          dontFixup = true;
-          meta.mainProgram = cliName;
+          entrypoint = entry;
+          depsHash = "sha256-mIb7xR1Cq1bjxDU0qK7T3jC5K0R1GfDiJy5LODpDfDg=";
+          bun = pkgs-2605.bun;
         };
       };
   };
