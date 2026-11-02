@@ -6,6 +6,13 @@ with packages;
     go-task
     infisical
     releaser
+    # ### bun-cli-dev-release-tools
+    # #### source: bun-cli
+    dpkg
+    gh
+    go
+    goreleaser
+    rpm
   ];
 
   lint = [

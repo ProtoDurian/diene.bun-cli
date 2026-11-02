@@ -21,8 +21,12 @@ checks:
       - cyanprint
       - dlint
       - docker
+      - dpkg
+      - gh
       - git
+      - go version
       - gomplate
+      - goreleaser
       - hadolint
       - infisical
       - jq
@@ -30,6 +34,7 @@ checks:
       - pre-commit
       - releaser
       - rg
+      - rpm
       - shellcheck
       - skopeo
       - task
